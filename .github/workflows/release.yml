@@ -11,13 +11,12 @@ jobs:
     permissions:
       contents: write       # To write release notes, update CHANGELOG, bump versions, create tags/releases
       pull-requests: write  # To create/update the Release PR
-      labels: write
 
     steps:
-      - uses: google-github-actions/release-please-action@v4
+      - uses: googleapis/release-please-action@v4
         with:
           # This is the most common type for Python projects using pyproject.toml
-          release-type: python
+          release-type: simple
           # Optional: Define the primary package name if different from repo name
           package-name: rl_resources_and_examples
 
