@@ -49,9 +49,9 @@ jobs:
         uv run python -m pytest tests/
 
     # Optional: Validate documentation build as part of tests
-    # - name: Build documentation (validation)
-    #   run: |
-    #     uv run mkdocs build --strict # Add --strict to fail on warnings
+    - name: Build documentation (validation)
+      run: |
+        uv run mkdocs build --strict # Add --strict to fail on warnings
 
   docs:
     # Ensure tests pass before deploying documentation
