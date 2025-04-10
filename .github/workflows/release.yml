@@ -1,69 +1,37 @@
-# .github/workflows/release.yml
-name: Release
+# .github/workflows/release-please.yml
+name: Release Please
 
 on:
   push:
-    branches: [ main ] # Trigger release process on every push to main
+    branches: [ main ]
 
 jobs:
-  release:
-    # Prevent duplicate runs for merges if main CI already runs on push to main
-    # Only run if the commit message doesn't indicate it's skipping CI/Release
-    if: "!contains(github.event.head_commit.message, '[skip ci]') && !contains(github.event.head_commit.message, '[ci skip]')"
+  release-please:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # Allow semantic-release to push tags and modify CHANGELOG (if configured)
-      issues: write   # Allow semantic-release to comment on issues/PRs (if configured)
-      pull-requests: write # Allow semantic-release to comment on PRs (if configured)
+      contents: write       # To write release notes, update CHANGELOG, bump versions, create tags/releases
+      pull-requests: write  # To create/update the Release PR
 
     steps:
-      - name: Checkout repository (full history)
-        uses: actions/checkout@v4
+      - uses: google-github-actions/release-please-action@v4
         with:
-          # semantic-release needs the full history to determine version bumps
-          fetch-depth: 0
-          # Optional: Persist credentials for push if semantic-release needs it
-          # persist-credentials: false
+          # This is the most common type for Python projects using pyproject.toml
+          release-type: python
+          # Optional: Define the primary package name if different from repo name
+          package-name: rl_resources_and_examples
 
-      - name: Set up Python
-        uses: actions/setup-python@v5 # Use v5
-        with:
-          python-version: "3.10" # Or the version required by your project/semantic-release
-          # Optional: Cache uv dependencies
-          # cache: 'uv'
-          # cache-dependency-path: pyproject.toml
+          # Optional: If using a Personal Access Token (PAT) instead of GITHUB_TOKEN
+          # token: ${{ secrets.YOUR_PAT_SECRET_NAME }}
 
-      - name: Install uv
-        run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
-          # Add uv's install location to PATH for subsequent steps
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          # === Required Configuration (Create these files in your repository root) ===
+          config-file: release-please-config.json
+          # manifest-file: .release-please-manifest.json
+          # ========================================================================
 
-      - name: Create virtual environment and install dependencies
-        run: |
-          uv venv # Creates .venv by default
-          # Install project dependencies + dev dependencies needed for release
-          # Ensure 'semantic-release' and any build tools are in your dev dependencies
-          uv pip install -e ".[dev]"
-
-      # Optional Steps (Re-add if you want final validation before release)
-      # - name: Run pre-commit checks (final validation)
-      #   uses: pre-commit/action@v3.0.1
-      #
-      # - name: Run tests (final validation)
-      #   run: |
-      #     uv run python -m pytest tests/
-      #
-      # - name: Build documentation (final validation)
-      #   run: |
-      #     # Make sure path/config is correct if mkdocs.yml isn't in root
-      #     uv run mkdocs build --strict
-
-      - name: Perform Semantic Release
-        env:
-          # GITHUB_TOKEN is automatically created by Actions, needed for semantic-release
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          # Use 'uv run' to execute semantic-release within the virtual environment
-          # 'publish' command analyzes commits, bumps version, tags, and creates GitHub release
-          uv run python -m semantic_release publish
+          # Optional: Use 'extra-files' to update versions in other files if needed
+          # See release-please documentation for syntax (JSON string)
+          # extra-files: |
+          #   [
+          #     "some/other/file/version.py",
+          #     {"type": "json", "path": "yet/another/file.json", "jsonpath": "$.version"}
+          #   ]
