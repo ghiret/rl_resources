@@ -51,6 +51,7 @@ jobs:
     # Optional: Validate documentation build as part of tests
     - name: Build documentation (validation)
       run: |
+        cd docs
         uv run mkdocs build --strict # Add --strict to fail on warnings
 
   docs:
@@ -87,17 +88,15 @@ jobs:
       run: |
         # Assuming mkdocs.yml is in the root and site builds to ./site
         # Use 'uv run' to execute mkdocs from the virtual environment
+        cd docs
         uv run mkdocs build
-        # If mkdocs.yml is in ./docs/ and builds site relative to that (./docs/site):
-        # cd docs
-        # uv run mkdocs build
 
-    - name: Deploy to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4 # Use v4 for gh-pages action
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
+    #- name: Deploy to GitHub Pages
+    #  uses: peaceiris/actions-gh-pages@v4 # Use v4 for gh-pages action
+    #  with:
+    #    github_token: ${{ secrets.GITHUB_TOKEN }}
         # Adjust publish_dir if your mkdocs build output is different
         # It should match the 'site_dir' in mkdocs.yml (defaults to 'site')
-        publish_dir: ./site
+    #    publish_dir: ./site
         # If you used 'cd docs' above, the path would be relative to that:
         # publish_dir: ./docs/site
