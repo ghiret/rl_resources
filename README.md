@@ -78,3 +78,7 @@ Feel free to contribute to this project by:
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## AI Assistance Disclaimer
+
+Please note that a significant portion of the content within this repository (including code, documentation, and configuration) has been generated or assisted by AI tools such as Google Gemini, OpenAI ChatGPT, and Cursor AI. This is done to accelerate development and explore AI capabilities. While the content is reviewed, users should exercise standard diligence and verify its suitability for their needs.
