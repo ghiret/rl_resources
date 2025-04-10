@@ -1,3 +1,4 @@
+# .github/workflows/ci.yml
 name: CI
 
 on:
@@ -11,72 +12,92 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.10"]
+        python-version: ["3.10"] # You can add more versions like "3.11", "3.12"
 
     steps:
     - uses: actions/checkout@v4
     - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5 # Use v5 for setup-python
       with:
         python-version: ${{ matrix.python-version }}
+        # Optional: cache dependencies managed by uv
+        # cache: 'uv'
+        # cache-dependency-path: pyproject.toml # Or requirements*.txt, setup.py etc.
+
     - name: Install uv
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
+        # Add uv's install location to PATH for subsequent steps
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
-    - name: Create virtual environment
-      run: uv venv
-    - name: Install dependencies
-      run: uv pip install -e ".[dev]"
-    - name: Run pre-commit
+
+    - name: Create virtual environment and install dependencies
       run: |
-        # Ensure pre-commit is in PATH
-        export PATH="$HOME/.local/bin:$PATH"
-        # Install pre-commit hooks
-        pre-commit install
-        # Run pre-commit on all files
-        pre-commit run --all-files
-    - name: Run tests
+        uv venv # Creates .venv by default
+        # Install project and dev dependencies into the virtual environment
+        # Assuming pre-commit, pytest, mkdocs are listed in pyproject.toml [project.optional-dependencies] dev
+        uv pip install -e ".[dev]"
+
+    - name: Run pre-commit checks
+      # Use the official pre-commit action
+      # It automatically uses the installed pre-commit if found,
+      # otherwise installs it. It handles caching too.
+      uses: pre-commit/action@v3.0.1 # Check for the latest version
+
+    - name: Run tests with pytest
       run: |
-        python -m pytest tests/
-    - name: Build documentation
-      run: |
-        mkdocs build
+        # Use 'uv run' to execute commands within the managed environment
+        uv run python -m pytest tests/
+
+    # Optional: Validate documentation build as part of tests
+    # - name: Build documentation (validation)
+    #   run: |
+    #     uv run mkdocs build --strict # Add --strict to fail on warnings
 
   docs:
+    # Ensure tests pass before deploying documentation
+    needs: test
     runs-on: ubuntu-latest
+    # Only run the deployment step on pushes to main
+    if: github.ref == 'refs/heads/main'
+
     steps:
     - uses: actions/checkout@v4
 
     - name: Set up Python
-      uses: actions/setup-python@v4
+      uses: actions/setup-python@v5
       with:
-        python-version: '3.10'
+        python-version: '3.10' # Or match the version needed for docs
+        # Optional: cache dependencies managed by uv
+        # cache: 'uv'
+        # cache-dependency-path: pyproject.toml
 
     - name: Install uv
       run: |
         curl -LsSf https://astral.sh/uv/install.sh | sh
         echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-    - name: Create virtual environment
+    - name: Create virtual environment and install dependencies
       run: |
         uv venv
-
-    - name: Install dependencies
-      run: |
         uv pip install -e ".[dev]"
 
-    - name: Run pre-commit
-      run: |
-        pre-commit run --all-files
+    # No need to run pre-commit again here, it ran in the 'test' job
 
-    - name: Build documentation
+    - name: Build documentation for deployment
       run: |
-        cd docs
-        mkdocs build
+        # Assuming mkdocs.yml is in the root and site builds to ./site
+        # Use 'uv run' to execute mkdocs from the virtual environment
+        uv run mkdocs build
+        # If mkdocs.yml is in ./docs/ and builds site relative to that (./docs/site):
+        # cd docs
+        # uv run mkdocs build
 
     - name: Deploy to GitHub Pages
-      if: github.ref == 'refs/heads/main'
-      uses: peaceiris/actions-gh-pages@v3
+      uses: peaceiris/actions-gh-pages@v4 # Use v4 for gh-pages action
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./docs/site
+        # Adjust publish_dir if your mkdocs build output is different
+        # It should match the 'site_dir' in mkdocs.yml (defaults to 'site')
+        publish_dir: ./site
+        # If you used 'cd docs' above, the path would be relative to that:
+        # publish_dir: ./docs/site
