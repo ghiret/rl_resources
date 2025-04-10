@@ -1,0 +1,32 @@
+site_name: Deep Reinforcement Learning Resources
+site_description: Documentation and resources for learning deep reinforcement learning
+theme:
+  name: material
+  features:
+    - navigation.tabs
+    - navigation.sections
+    - navigation.expand
+    - search.highlight
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Tutorials:
+    - Getting Started: tutorials/getting_started.md
+    - Environment Setup: tutorials/environment_setup.md
+  - API Reference:
+    - Utils: api/utils.md
+  - Examples:
+    - Basic DQN: examples/basic_dqn.md
+    - PPO Implementation: examples/ppo.md
+
+markdown_extensions:
+  - pymdownx.highlight
+  - pymdownx.superfences
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.arithmatex
+  - admonition
+  - footnotes
+  - attr_list
+  - md_in_html
