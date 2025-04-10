@@ -11,14 +11,14 @@ theme:
 
 nav:
   - Home: index.md
-  - Tutorials:
-    - Getting Started: tutorials/getting_started.md
-    - Environment Setup: tutorials/environment_setup.md
-  - API Reference:
-    - Utils: api/utils.md
-  - Examples:
-    - Basic DQN: examples/basic_dqn.md
-    - PPO Implementation: examples/ppo.md
+  #- Tutorials:
+  #  - Getting Started: tutorials/getting_started.md
+  #  - Environment Setup: tutorials/environment_setup.md
+  #- API Reference:
+  #  - Utils: api/utils.md
+  #- Examples:
+  #  - Basic DQN: examples/basic_dqn.md
+  #  - PPO Implementation: examples/ppo.md
 
 markdown_extensions:
   - pymdownx.highlight
