@@ -7,7 +7,7 @@ name = "rl_resources"
 version = "0.1.0"
 description = "Deep Reinforcement Learning Resources and Utilities"
 authors = [
-    {name = "Paco", email = "ghiret"}
+    {name = "Paco"}
 ]
 dependencies = [
     "torch>=2.0.0",
