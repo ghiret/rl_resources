@@ -14,4 +14,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - CI/CD workflow with GitHub Actions
 - Pre-commit hooks with Ruff
 - Development container configuration
-- Test suite with pytest 
+- Test suite with pytest
