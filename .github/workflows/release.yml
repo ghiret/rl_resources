@@ -11,6 +11,7 @@ jobs:
     permissions:
       contents: write       # To write release notes, update CHANGELOG, bump versions, create tags/releases
       pull-requests: write  # To create/update the Release PR
+      labels: write
 
     steps:
       - uses: google-github-actions/release-please-action@v4
