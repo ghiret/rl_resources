@@ -1,37 +1,24 @@
 # .github/workflows/release-please.yml
-name: Release Please
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+
+permissions:
+  contents: write
+  pull-requests: write
+
+name: Release Please
 
 jobs:
   release-please:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write       # To write release notes, update CHANGELOG, bump versions, create tags/releases
-      pull-requests: write  # To create/update the Release PR
-
     steps:
       - uses: googleapis/release-please-action@v4
         with:
-          # This is the most common type for Python projects using pyproject.toml
+
+          token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
+
           release-type: simple
-          # Optional: Define the primary package name if different from repo name
-          package-name: rl_resources_and_examples
-
-          # Optional: If using a Personal Access Token (PAT) instead of GITHUB_TOKEN
-          # token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
-
-          # === Required Configuration (Create these files in your repository root) ===
           config-file: release-please-config.json
-          # manifest-file: .release-please-manifest.json
-          # ========================================================================
-
-          # Optional: Use 'extra-files' to update versions in other files if needed
-          # See release-please documentation for syntax (JSON string)
-          # extra-files: |
-          #   [
-          #     "some/other/file/version.py",
-          #     {"type": "json", "path": "yet/another/file.json", "jsonpath": "$.version"}
-          #   ]
