@@ -21,7 +21,7 @@ jobs:
           package-name: rl_resources_and_examples
 
           # Optional: If using a Personal Access Token (PAT) instead of GITHUB_TOKEN
-          # token: ${{ secrets.YOUR_PAT_SECRET_NAME }}
+          # token: ${{ secrets.RELEASE_PLEASE_TOKEN }}
 
           # === Required Configuration (Create these files in your repository root) ===
           config-file: release-please-config.json
