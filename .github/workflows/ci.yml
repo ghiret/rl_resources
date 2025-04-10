@@ -51,6 +51,7 @@ jobs:
     # Optional: Validate documentation build as part of tests
     - name: Build documentation (validation)
       run: |
+        cd docs
         uv run mkdocs build --strict # Add --strict to fail on warnings
 
   docs:
