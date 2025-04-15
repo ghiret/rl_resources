@@ -45,6 +45,31 @@ If you prefer to set up the environment locally instead of using the devcontaine
 4. Install dependencies: `uv pip install -e ".[dev]"`
 5. Install pre-commit hooks: `pre-commit install`
 
+### Running Jupyter Notebooks
+
+To run Jupyter notebooks in Cursor:
+
+1. Make sure you have the development dependencies installed:
+   ```bash
+   uv pip install -e ".[dev]"
+   ```
+
+2. Register the virtual environment as a Jupyter kernel:
+   ```bash
+   python -m ipykernel install --user --name=rl_resources
+   ```
+
+3. Open a notebook in Cursor:
+   - Open any `.ipynb` file from the `notebooks/` directory
+   - Cursor will automatically detect it as a Jupyter notebook
+   - Select the `rl_resources` kernel from the kernel selector in the top-right corner
+
+4. Start coding! You can:
+   - Run cells with `Shift + Enter`
+   - Add new cells with `B` (below) or `A` (above)
+   - Use Markdown cells for documentation
+   - Use code cells for Python code
+
 ### Code Quality
 
 This project uses pre-commit hooks to ensure code quality:
