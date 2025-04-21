@@ -1,0 +1,36 @@
+{
+    "name": "PyTorch RL Development",
+    "image": "mcr.microsoft.com/devcontainers/python:3.10",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "ms-python.vscode-pylance",
+                "ms-toolsai.jupyter",
+                "ms-azuretools.vscode-docker",
+                "charliermarsh.ruff"
+            ],
+            "settings": {
+                "python.defaultInterpreterPath": "/usr/local/bin/python",
+                "python.linting.enabled": true,
+                "python.linting.pylintEnabled": false,
+                "python.formatting.provider": "none",
+                "editor.formatOnSave": true,
+                "editor.codeActionsOnSave": {
+                    "source.fixAll.ruff": true,
+                    "source.organizeImports.ruff": true
+                },
+                "ruff.format.args": [
+                    "--line-length",
+                    "88"
+                ],
+                "ruff.lint.args": [
+                    "--line-length",
+                    "88"
+                ]
+            }
+        }
+    },
+    "postCreateCommand": "curl -LsSf https://astral.sh/uv/install.sh | sh && uv venv .venv && . .venv/bin/activate && uv pip install -e '.[dev]' && pre-commit install",
+    "remoteUser": "vscode"
+}

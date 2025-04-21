@@ -27,6 +27,8 @@ dependencies = [
     "build>=0.10.0",
     "ipython>=8.35.0",
     "scipy>=1.15.2",
+    "tqdm>=4.67.1",
+    "pillow>=11.2.1",
 ]
 requires-python = ">=3.10"
 readme = "README.md"
@@ -104,14 +106,18 @@ select = [
 ignore = [
     "D100", # Missing docstring in public module
     "D104", # Missing docstring in public package
-    "D203", # no-blank-line-before-class
-    "D212", # multi-line-summary-first-line
+    "D211","D212",
+
     "ANN101", # Missing type annotation for self in method
     "ANN102", # Missing type annotation for cls in classmethod
     "ANN401", # Any type allowed
     "S101", # Use of assert detected
     "PT018", # Assertion should be broken down into multiple parts
     "INP001", # File is part of an implicit namespace package
+    "ANN001", # Missing type annotations for function arguments
+    "ANN201", "ANN202", "ANN204", "D102","ERA001", "D101",
+    "COM812", "ISC001","E501","F405","N802","N806","T201","G004","C901","PLR0913",
+    "PLR0912","PLR0915","PLR0911","TRY300"
 ]
 
 [tool.ruff.format]
