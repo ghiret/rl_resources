@@ -5,6 +5,7 @@ In here you will find code taken from books and adapted during my learning, summ
 The idea of this is to contain my personal notes as I develop a better understanding of the field, primarily for my personal use.
 However, this might be helpful for someone else along this journey and that's why I have it in public.
 
+The documentation is published as github pages [here](https://ghiret.github.io/rl_resources/)
 ## Getting Started
 
 1. Clone this repository
