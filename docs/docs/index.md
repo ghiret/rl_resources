@@ -1,22 +1,15 @@
 # Deep Reinforcement Learning Resources
 
-Welcome to the Deep Reinforcement Learning Resources repository! This project serves as a comprehensive collection of documentation, notes, and practical examples for learning deep reinforcement learning using PyTorch.
+Welcome to the Deep Reinforcement Learning Resources repository!
+This project serves as my personal set of notes for documenting my learning and understanding of DRL.
+This is meant for personal use but if this is of any help to anyone, that's great too.
 
-## Features
 
-- 🚀 PyTorch-based development environment with CUDA support
-- 📚 Comprehensive documentation and tutorials
-- 🧪 Utility functions with tests
-- 📓 Jupyter notebooks for hands-on learning
-- 🎮 Integration with popular RL environments
+# Docs structure
 
-## Getting Started
-
-1. Clone this repository
-2. Open in VS Code with Dev Containers extension
-3. The development container will automatically set up all dependencies
-4. Start exploring the tutorials and examples
-
+* [Introduction](introduction.md)
+* [Annotated bibliography](bibliography.md)
+* [Setup instructions](setup.md)
 ## Project Structure
 
 ```
@@ -27,14 +20,6 @@ Welcome to the Deep Reinforcement Learning Resources repository! This project se
 ├── tests/           # Test files
 └── utils/           # Utility functions
 ```
-
-## Contributing
-
-Feel free to contribute to this project by:
-- Adding new tutorials
-- Improving documentation
-- Adding utility functions
-- Creating example implementations
 
 ## License
 
