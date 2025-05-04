@@ -1,17 +1,9 @@
 # Deep Reinforcement Learning Resources
 
-A comprehensive collection of documentation, notes, and practical examples for learning deep reinforcement learning using PyTorch.
-
-## Features
-
-- 🚀 PyTorch-based development environment with CUDA support
-- 📚 Comprehensive documentation and tutorials
-- 🧪 Utility functions with tests
-- 📓 Jupyter notebooks for hands-on learning
-- 🎮 Integration with popular RL environments
-- 🔄 Semantic versioning with automated releases
-- ⚡ Modern dependency management with uv
-- ✅ Code quality enforced with pre-commit and ruff
+This repository is my knowledge repository as I explore and learn Reinforcement learning.
+In here you will find code taken from books and adapted during my learning, summaries or notes on papers, and random bits.
+The idea of this is to contain my personal notes as I develop a better understanding of the field, primarily for my personal use.
+However, this might be helpful for someone else along this journey and that's why I have it in public.
 
 ## Getting Started
 
@@ -94,11 +86,8 @@ Releases are automatically managed using [python-semantic-release](https://pytho
 
 ## Contributing
 
-Feel free to contribute to this project by:
-- Adding new tutorials
-- Improving documentation
-- Adding utility functions
-- Creating example implementations
+Feel free to contribute report typos, add feature request or generally asks questions.
+I cannot guarantee I will have time to reply, but I will do my best.
 
 ## License
 
