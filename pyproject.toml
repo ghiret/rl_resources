@@ -22,13 +22,13 @@ dependencies = [
     "stable-baselines3>=2.0.0",
     "pytest>=7.0.0",
     "pylint>=2.15.0",
-
     "python-semantic-release>=8.0.0",
     "build>=0.10.0",
     "ipython>=8.35.0",
     "scipy>=1.15.2",
     "tqdm>=4.67.1",
     "pillow>=11.2.1",
+    "pygame>=2.6.1",
 ]
 
 
@@ -49,10 +49,10 @@ docs = [
 
 ]
 [tool.setuptools.packages.find]
-include = ["utils*"]
+include = ["src/*"]
 [tool.semantic_release]
 version_variable = [
-    "utils/__init__.py:__version__"
+    "__init__.py:__version__"
 ]
 version_toml = [
     "pyproject.toml:tool.semantic_release.version"
@@ -130,3 +130,7 @@ quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
+
+[tool.uv.sources]
+gym-aima = { git = "https://github.com/mimoralea/gym-aima" }
+gym-walk = { git = "https://github.com/mimoralea/gym-walk" }
