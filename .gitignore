@@ -110,3 +110,5 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+.vscode/
+downloaded_pdfs
