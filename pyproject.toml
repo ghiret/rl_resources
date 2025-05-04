@@ -22,4 +22,4 @@ docs = [
 ]
 
 [tool.hatch.build.targets.wheel]
-packages = ["notebooks", "downloaded_pdfs"]
+packages = ["notebooks"]

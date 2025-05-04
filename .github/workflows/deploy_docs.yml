@@ -1,0 +1,66 @@
+# .github/workflows/deploy-mkdocs.yml
+
+name: Deploy MkDocs to GitHub Pages using uv
+
+# Trigger the workflow on push events to the main branch
+on:
+  push:
+    branches:
+      - main # Or your default branch (e.g., master)
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: write # Needed to push the built site to the gh-pages branch
+
+jobs:
+  deploy:
+    name: Deploy MkDocs Site
+    runs-on: ubuntu-latest # Use the latest Ubuntu runner
+
+    steps:
+      # 1. Check out the repository code
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # 2. Set up Python environment (needed for MkDocs runtime)
+      - name: Set up Python 3.x
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x' # Use a recent stable Python version (>=3.10 based on your pyproject.toml)
+
+      # 3. Install uv (fast Python package installer)
+      - name: Install uv
+        run: curl -LsSf https://astral.sh/uv/install.sh | sh
+      # Add uv to the PATH for subsequent steps
+      - name: Add uv to PATH
+        run: echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+
+      # 4. Cache uv's global cache directory
+      - name: Get uv cache directory
+        id: uv-cache-dir
+        run: echo "dir=$(uv cache dir)" >> $GITHUB_OUTPUT
+      - name: Cache uv http and git data
+        uses: actions/cache@v4
+        with:
+          path: ${{ steps.uv-cache-dir.outputs.dir }}
+          # Generate a cache key based on the OS, Python version, and pyproject.toml hash
+          # (Removed requirements.txt from hash as it's not used for docs deps)
+          key: ${{ runner.os }}-uv-${{ hashFiles('**/pyproject.toml') }}
+          restore-keys: |
+            ${{ runner.os }}-uv-
+
+      # 5. Install dependencies using uv from pyproject.toml (docs extra)
+      #    Installs the project and dependencies listed under [project.optional-dependencies.docs]
+      - name: Install dependencies with uv
+        run: uv pip install --system '.[docs]'
+        # Use --system to install into the Python environment setup earlier
+        # Quotes around '.[docs]' are important in shell
+
+      # 6. Build and deploy the MkDocs site
+      - name: Deploy to GitHub Pages
+        run: mkdocs gh-deploy --force --clean
+        # '--force' is recommended to overwrite the history on gh-pages branch
+        # '--clean' ensures the site directory is clean before building
+        # MkDocs uses the Python environment where dependencies were installed by uv
