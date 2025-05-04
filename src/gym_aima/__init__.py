@@ -1,8 +1,9 @@
 # Copyright (c) 2018, Miguel Morales
-# Copied from https://github.com/mimoralea/gym-aima/blob/master/gym_aima/envs/__init__.py
+# Copied from https://github.com/mimoralea/gym-aima/blob/master/gym_aima/__init__.py
 # License: MIT
-# Updated to use gymnasium
-from gymnasium.envs.registration import register
+"""Gymnasium environments for AIMA."""
+
+from gym.envs.registration import register
 
 # Classic Gridworld environments
 register(
