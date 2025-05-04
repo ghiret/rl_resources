@@ -4,7 +4,7 @@ import gymnasium as gym
 import numpy as np
 import pytest
 
-from utils.preprocessing import normalize_observation, preprocess_env
+from src.utils.preprocessing import normalize_observation, preprocess_env
 
 
 def test_normalize_observation() -> None:
