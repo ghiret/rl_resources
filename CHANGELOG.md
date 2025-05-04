@@ -5,6 +5,13 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.0](https://github.com/ghiret/rl_resources/compare/v0.3.0...v0.4.0) (2025-05-04)
+
+
+### Features
+
+* Publish mkdocs to github pages from main. ([5a33fa6](https://github.com/ghiret/rl_resources/commit/5a33fa6fd8f68a7dd546b4f9c95fd70b8fa91682))
+
 ## [0.3.0](https://github.com/ghiret/rl_resources/compare/v0.2.0...v0.3.0) (2025-04-18)
 
 
