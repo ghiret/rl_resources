@@ -112,7 +112,6 @@ ignore = [
     "D100", # Missing docstring in public module
     "D104", # Missing docstring in public package
     "D211","D212",
-
     "ANN101", # Missing type annotation for self in method
     "ANN102", # Missing type annotation for cls in classmethod
     "ANN401", # Any type allowed
@@ -124,6 +123,10 @@ ignore = [
     "COM812", "ISC001","E501","F405","N802","N806","T201","G004","C901","PLR0913",
     "PLR0912","PLR0915","PLR0911","TRY300","UP038"
 ]
+
+# Add per-file-ignores to allow imports in __init__.py
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
 
 [tool.ruff.format]
 quote-style = "double"

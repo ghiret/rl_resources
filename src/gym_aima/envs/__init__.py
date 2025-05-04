@@ -2,3 +2,5 @@
 # Copied from https://github.com/mimoralea/gym-aima/blob/master/gym_aima/envs/__init__.py
 # License: MIT
 """Gymnasium environments for AIMA."""
+
+from gym_aima.envs.aima_env import AIMAEnv

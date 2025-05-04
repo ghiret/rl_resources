@@ -147,7 +147,7 @@ register(
 )
 register(
     id="SlipperyWalkFive-v0",
-    entry_point="gym_walk.envs:WalkEnv",
+    entry_point="src.gym_walk.envs:WalkEnv",
     # left-most and right-most states are terminal
     kwargs={"n_states": 5, "p_stay": 0.5 * 2 / 3.0, "p_backward": 0.5 * 1 / 3.0},
     max_episode_steps=100,

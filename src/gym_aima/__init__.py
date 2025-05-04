@@ -3,7 +3,7 @@
 # License: MIT
 """Gymnasium environments for AIMA."""
 
-from gym.envs.registration import register
+from gymnasium.envs.registration import register
 
 # Classic Gridworld environments
 register(
