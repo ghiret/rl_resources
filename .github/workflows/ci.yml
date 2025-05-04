@@ -48,18 +48,10 @@ jobs:
         # Use 'uv run' to execute commands within the managed environment
         uv run python -m pytest tests/
 
-    # Optional: Validate documentation build as part of tests
-    - name: Build documentation (validation)
-      run: |
-        cd docs
-        uv run mkdocs build --strict # Add --strict to fail on warnings
-
   docs:
     # Ensure tests pass before deploying documentation
     needs: test
     runs-on: ubuntu-latest
-    # Only run the deployment step on pushes to main
-    if: github.ref == 'refs/heads/main'
 
     steps:
     - uses: actions/checkout@v4
@@ -80,7 +72,7 @@ jobs:
     - name: Create virtual environment and install dependencies
       run: |
         uv venv
-        uv pip install -e ".[dev]"
+        uv pip install -e ".[docs]"
 
     # No need to run pre-commit again here, it ran in the 'test' job
 
@@ -100,3 +92,27 @@ jobs:
     #    publish_dir: ./site
         # If you used 'cd docs' above, the path would be relative to that:
         # publish_dir: ./docs/site
+    - name: Upload artifact
+        # Automatically uploads the built site files ('docs/site') for deployment
+      uses: actions/upload-pages-artifact@v3
+      with:
+          # Path to the folder containing static files to upload.
+          # This should match the output directory of 'mkdocs build' (relative to repo root)
+        path: 'docs/site' # Default site_dir is 'site' relative to mkdocs.yml in 'docs/'
+
+    # Job to deploy the documentation artifact to GitHub Pages
+  deploy:
+      # Only run this job on pushes to the main branch, after build completes
+      if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+      needs: docs
+      permissions:
+        id-token: write
+        pages: write
+      environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }} # Output the deployed URL
+      runs-on: ubuntu-latest
+      steps:
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4 # Use the official deployment action
