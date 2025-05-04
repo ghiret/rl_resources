@@ -132,5 +132,3 @@ skip-magic-trailing-comma = false
 line-ending = "auto"
 
 [tool.uv.sources]
-gym-aima = { git = "https://github.com/mimoralea/gym-aima" }
-gym-walk = { git = "https://github.com/mimoralea/gym-walk" }
