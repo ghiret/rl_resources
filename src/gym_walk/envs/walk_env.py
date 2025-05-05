@@ -83,6 +83,23 @@ class WalkEnv(gym.Env):
         self.reset()
 
     def step(self, action):
+        """
+        Execute agent's action in the environment.
+
+        Args:
+        ----
+            action (int): Action provided by the agent (0 for WEST, 1 for EAST).
+
+        Returns:
+        -------
+            observation (int): Next state (integer index).
+            reward (float): Reward from the action (0.0 or 1.0).
+            terminated (bool): True if the episode ended at a terminal state (leftmost or rightmost).
+            truncated (bool): Always False in this environment.
+            info (dict): Auxiliary information, including 'prob' (transition probability)
+                        and 'success' (bool indicating if a terminal state was reached).
+
+        """
         # ensure not a nan
         if np.isnan(action):
             return self.s, 0.0, True, True, {"success": False}
@@ -114,8 +131,7 @@ class WalkEnv(gym.Env):
             categorical_sample(self.isd, self.np_random)
         )  # Ensure state is an integer
         self.lastaction = None
-        if options is None:
-            print("No options provided")
+        del options
         return int(self.s), {"prob": self.isd[self.s]}
 
     def render(self):
