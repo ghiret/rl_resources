@@ -22,13 +22,13 @@ dependencies = [
     "stable-baselines3>=2.0.0",
     "pytest>=7.0.0",
     "pylint>=2.15.0",
-
     "python-semantic-release>=8.0.0",
     "build>=0.10.0",
     "ipython>=8.35.0",
     "scipy>=1.15.2",
     "tqdm>=4.67.1",
     "pillow>=11.2.1",
+    "pygame>=2.6.1",
 ]
 
 
@@ -49,10 +49,10 @@ docs = [
 
 ]
 [tool.setuptools.packages.find]
-include = ["utils*"]
+include = ["src/*"]
 [tool.semantic_release]
 version_variable = [
-    "utils/__init__.py:__version__"
+    "__init__.py:__version__"
 ]
 version_toml = [
     "pyproject.toml:tool.semantic_release.version"
@@ -112,7 +112,6 @@ ignore = [
     "D100", # Missing docstring in public module
     "D104", # Missing docstring in public package
     "D211","D212",
-
     "ANN101", # Missing type annotation for self in method
     "ANN102", # Missing type annotation for cls in classmethod
     "ANN401", # Any type allowed
@@ -122,11 +121,17 @@ ignore = [
     "ANN001", # Missing type annotations for function arguments
     "ANN201", "ANN202", "ANN204", "D102","ERA001", "D101",
     "COM812", "ISC001","E501","F405","N802","N806","T201","G004","C901","PLR0913",
-    "PLR0912","PLR0915","PLR0911","TRY300"
+    "PLR0912","PLR0915","PLR0911","TRY300","UP038"
 ]
+
+# Add per-file-ignores to allow imports in __init__.py
+[tool.ruff.lint.per-file-ignores]
+"__init__.py" = ["F401", "F403"]
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
+
+[tool.uv.sources]

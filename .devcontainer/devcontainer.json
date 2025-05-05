@@ -8,7 +8,10 @@
                 "ms-python.vscode-pylance",
                 "ms-toolsai.jupyter",
                 "ms-azuretools.vscode-docker",
-                "charliermarsh.ruff"
+                "charliermarsh.ruff",
+                "GitHub.vscode-pull-request-github",
+                "github.vscode-github-actions",
+                "ms-toolsai.jupyter-renderers"
             ],
             "settings": {
                 "python.defaultInterpreterPath": "/usr/local/bin/python",
