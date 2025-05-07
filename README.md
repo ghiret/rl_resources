@@ -1,3 +1,4 @@
+![Logo](docs/rl_resources_logo.png)
 # Deep Reinforcement Learning Resources
 
 This repository is my knowledge repository as I explore and learn Reinforcement learning.
@@ -97,3 +98,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## AI Assistance Disclaimer
 
 Please note that a significant portion of the content within this repository (including code, documentation, and configuration) has been generated or assisted by AI tools such as Google Gemini, OpenAI ChatGPT, and Cursor AI. This is done to accelerate development and explore AI capabilities. While the content is reviewed, users should exercise standard diligence and verify its suitability for their needs.
+
+### Logo origins
+This was created by ChatGPT after a picture of my dog when she fell asleep on my laptop when I was working on this project.
