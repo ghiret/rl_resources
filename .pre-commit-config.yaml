@@ -17,6 +17,7 @@ repos:
         stages: [pre-commit]
     -   id: check-added-large-files
         stages: [pre-commit]
+        args: ['--maxkb=10240']
     -   id: check-ast
         stages: [pre-commit]
     -   id: check-json
