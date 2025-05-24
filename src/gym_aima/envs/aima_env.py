@@ -8,19 +8,34 @@ import sys
 from contextlib import closing
 
 import numpy as np
-from gymnasium import utils
-from gymnasium.envs.toy_text import discrete
+from gymnasium import Env, spaces, utils
 from six import StringIO
 
 LEFT, DOWN, RIGHT, UP = range(4)
 
 
-class AIMAEnv(discrete.DiscreteEnv):
+def categorical_sample(prob_n, np_random):
+    """
+    Sample from categorical distribution.
+
+    Each row specifies class probabilities.
+    """
+    prob_n = np.asarray(prob_n)
+    csprob_n = np.cumsum(prob_n)
+    return (csprob_n > np_random.random()).argmax()
+
+
+class AIMAEnv(Env):
     metadata = {"render.modes": ["human", "ansi"]}
 
-    def __init__(self, map_name="3x4", noise=0.2, living_rew=0.0, sink=False):
+    def __init__(
+        self, map_name="3x4", noise=0.2, living_rew=0.0, sink=False, render_mode="human"
+    ):
         """Initialize the environment."""
+        super().__init__()
         self.map_name = map_name
+        self.render_mode = render_mode
+
         desc = [
             "FFFG",
             "FWFH",
@@ -32,10 +47,13 @@ class AIMAEnv(discrete.DiscreteEnv):
         nA = 4
         nS = nrow * ncol
 
-        isd = np.array(desc == b"S").astype("float64").ravel()
-        isd /= isd.sum()
+        self.s = None  # Current state
+        self.lastaction = None  # Last action taken
 
-        P = {s: {a: [] for a in range(nA)} for s in range(nS)}
+        self.initial_state_distrib = np.array(desc == b"S").astype("float64").ravel()
+        self.initial_state_distrib /= self.initial_state_distrib.sum()
+
+        self.P = {s: {a: [] for a in range(nA)} for s in range(nS)}
 
         def to_s(row, col):
             return row * ncol + col
@@ -55,7 +73,7 @@ class AIMAEnv(discrete.DiscreteEnv):
             for col in range(ncol):
                 s = to_s(row, col)
                 for a in range(4):
-                    li = P[s][a]
+                    li = self.P[s][a]
                     letter = desc[row, col]
                     if sink:
                         if letter in b"W":
@@ -107,9 +125,16 @@ class AIMAEnv(discrete.DiscreteEnv):
                                 )
                             )
 
-        super().__init__(nS, nA, P, isd)
+        self.observation_space = spaces.Discrete(nS)
+        self.action_space = spaces.Discrete(nA)
 
-    def render(self, mode="human"):
+    def render(self):
+        mode = self.render_mode
+
+        if mode == "None" and self.render_mode not in self.metadata["render_modes"]:
+            msg = f"Unsupported render mode: {self.render_mode}"
+            raise ValueError(msg)
+
         outfile = StringIO() if mode == "ansi" else sys.stdout
 
         row, col = self.s // self.ncol, self.s % self.ncol
@@ -128,3 +153,20 @@ class AIMAEnv(discrete.DiscreteEnv):
             with closing(outfile):
                 return outfile.getvalue()
         return None
+
+    def step(self, a):
+        transitions = self.P[self.s][a]
+        i = categorical_sample([t[0] for t in transitions], self.np_random)
+        p, s, r, d = transitions[i]
+        self.s = s
+        self.lastaction = a
+        return (int(s), r, d, False, {"prob": p})
+
+    def reset(self, seed: int | None = None):
+        super().reset(seed=seed)
+        self.s = categorical_sample(self.initial_state_distrib, self.np_random)
+        self.lastaction = None
+        return int(self.s), {}
+
+    def close(self):
+        super().close()

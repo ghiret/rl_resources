@@ -3,4 +3,4 @@
 # License: MIT
 """Gymnasium environments for AIMA."""
 
-from gym_aima.envs.aima_env import AIMAEnv
+from src.gym_aima.envs.aima_env import AIMAEnv
