@@ -162,7 +162,8 @@ class AIMAEnv(Env):
         self.lastaction = a
         return (int(s), r, d, False, {"prob": p})
 
-    def reset(self, seed: int | None = None):
+    def reset(self, seed: int | None = None, options: dict | None = None):  # noqa: ARG002
+        """Reset the environment to its initial state."""
         super().reset(seed=seed)
         self.s = categorical_sample(self.initial_state_distrib, self.np_random)
         self.lastaction = None
