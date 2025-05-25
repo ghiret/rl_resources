@@ -22,15 +22,7 @@
                 "editor.codeActionsOnSave": {
                     "source.fixAll.ruff": true,
                     "source.organizeImports.ruff": true
-                },
-                "ruff.format.args": [
-                    "--line-length",
-                    "88"
-                ],
-                "ruff.lint.args": [
-                    "--line-length",
-                    "88"
-                ]
+                }
             }
         }
     },
