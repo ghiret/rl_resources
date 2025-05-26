@@ -168,9 +168,9 @@ def get_gif_html(env_videos, title, subtitle_eps=None, max_n_videos=4):
         <h3>{0}<h3/>
         <img src="data:image/gif;base64,{1}" />"""
         prefix = "Trial " if subtitle_eps is None else "Episode "
-        print(f"video_path: {video_path}")
-        print(f"Episode ID: {episode_id}")
-        print(f"Subtitle EPS: {subtitle_eps}")
+        # print(f"video_path: {video_path}")
+        # print(f"Episode ID: {episode_id}")
+        # print(f"Subtitle EPS: {subtitle_eps}")
         if subtitle_eps is None:
             sufix = str(episode_id)
         else:

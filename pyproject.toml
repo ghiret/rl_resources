@@ -11,6 +11,7 @@ authors = [
 ]
 
 dependencies = [
+    # PyTorch and Torchvision will use the "pytorch-source" defined in [tool.uv.sources]
     "torch>=2.0.0",
     "torchvision>=0.15.0",
     "numpy>=1.21.0",
@@ -26,30 +27,35 @@ dependencies = [
     "build>=0.10.0",
     "ipython>=8.35.0",
     "scipy>=1.15.2",
-    "tqdm>=4.67.1",
-    "pillow>=11.2.1",
+    "tqdm>=4.66.5",
+    "pillow>=11.0.0",
     "pygame>=2.6.1",
 ]
 
-
 requires-python = ">=3.10"
 readme = "README.md"
-license = "MIT"
-
+[project.license]
+text = "MIT"
 
 [project.optional-dependencies]
+cpu = [
+    # "some-cpu-specific-utility"
+]
+gpu = [
+    # "some-gpu-specific-utility"
+]
 dev = [
     "pre-commit>=3.5.0",
     "ruff>=0.3.0",
 ]
-
 docs = [
     "mkdocs>=1.4.0",
     "mkdocs-material>=9.0.0",
-
 ]
+
 [tool.setuptools.packages.find]
 include = ["src/*"]
+
 [tool.semantic_release]
 version_variable = [
     "__init__.py:__version__"
@@ -61,7 +67,7 @@ branch = "main"
 upload_to_pypi = false
 upload_to_release = true
 build_command = "pip install build && python -m build"
-repository = "https://github.com/yourusername/rl_resources"
+repository = "https://github.com/yourusername/rl_resources" # Please update this
 token = "${{ secrets.GITHUB_TOKEN }}"
 
 [tool.ruff]
@@ -70,61 +76,19 @@ target-version = "py310"
 
 [tool.ruff.lint]
 select = [
-    "E",  # pycodestyle errors
-    "F",  # pyflakes
-    "I",  # isort
-    "B",  # flake8-bugbear
-    "C4", # flake8-comprehensions
-    "UP", # pyupgrade
-    "N",  # pep8-naming
-    "ANN", # flake8-annotations
-    "S",  # flake8-bandit
-    "A",  # flake8-builtins
-    "COM", # flake8-commas
-    "C90", # mccabe complexity
-    "D",  # pydocstyle
-    "T10", # flake8-debugger
-    "EM",  # flake8-errmsg
-    "EXE", # flake8-executable
-    "ISC", # flake8-implicit-str-concat
-    "G",  # flake8-logging-format
-    "INP", # flake8-no-pep420
-    "PIE", # flake8-pie
-    "T20", # flake8-print
-    "PYI", # flake8-pyi
-    "PT",  # flake8-pytest-style
-    "Q",  # flake8-quotes
-    "RSE", # flake8-raise
-    "RET", # flake8-return
-    "SLF", # flake8-self
-    "SIM", # flake8-simplify
-    "TID", # flake8-tidy-imports
-    "TCH", # flake8-type-checking
-    "ARG", # flake8-unused-arguments
-    "PTH", # flake8-use-pathlib
-    "ERA", # eradicate
-    "PD",  # pandas-vet
-    "PGH", # pygrep-hooks
-    "PL",  # pylint
-    "TRY", # tryceratops
+    "E", "F", "I", "B", "C4", "UP", "N", "ANN", "S", "A", "COM", "C90", "D",
+    "T10", "EM", "EXE", "ISC", "G", "INP", "PIE", "T20", "PYI", "PT", "Q",
+    "RSE", "RET", "SLF", "SIM", "TID", "TCH", "ARG", "PTH", "ERA", "PD",
+    "PGH", "PL", "TRY"
 ]
 ignore = [
-    "D100", # Missing docstring in public module
-    "D104", # Missing docstring in public package
-    "D211","D212",
-    "ANN101", # Missing type annotation for self in method
-    "ANN102", # Missing type annotation for cls in classmethod
-    "ANN401", # Any type allowed
-    "S101", # Use of assert detected
-    "PT018", # Assertion should be broken down into multiple parts
-    "INP001", # File is part of an implicit namespace package
-    "ANN001", # Missing type annotations for function arguments
-    "ANN201", "ANN202", "ANN204", "D102","ERA001", "D101",
-    "COM812", "ISC001","E501","F405","N802","N806","T201","G004","C901","PLR0913",
-    "PLR0912","PLR0915","PLR0911","TRY300","UP038","S603"
+    "D100", "D104", "D211","D212", "ANN101", "ANN102", "ANN401", "S101",
+    "PT018", "INP001", "ANN001", "ANN201", "ANN202", "ANN204", "D102",
+    "ERA001", "D101", "COM812", "ISC001","E501","F405","N802","N806",
+    "T201","G004","C901","PLR0913", "PLR0912","PLR0915","PLR0911",
+    "TRY300","UP038","S603"
 ]
 
-# Add per-file-ignores to allow imports in __init__.py
 [tool.ruff.lint.per-file-ignores]
 "__init__.py" = ["F401", "F403"]
 
@@ -133,5 +97,22 @@ quote-style = "double"
 indent-style = "space"
 skip-magic-trailing-comma = false
 line-ending = "auto"
-
 [tool.uv.sources]
+torch = [
+  { index = "pytorch-cu124", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" }
+]
+torchvision = [
+  { index = "pytorch-cu124", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" }
+]
+
+[[tool.uv.index]]
+name = "pytorch-cu124"
+url = "https://download.pytorch.org/whl/cu124"
+explicit = true
+
+[[tool.uv.index]]
+name = "pytorch-cpu"
+url = "https://download.pytorch.org/whl/cpu"
+explicit = true
