@@ -4,10 +4,7 @@
         "dockerfile": "Dockerfile",
         "context": "../.."
     },
-    "runArgs": [
-        "--gpus=all"
-    ],
-    "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+    "workspaceFolder": "/workspaces/rl_resources",
     "customizations": {
         "vscode": {
             "extensions": [
@@ -21,7 +18,7 @@
                 "ms-toolsai.jupyter-renderers"
             ],
             "settings": {
-                "python.defaultInterpreterPath": "/usr/bin/python3.11",
+                "python.defaultInterpreterPath": "/opt/venv/bin/python",
                 "python.linting.enabled": true,
                 "python.linting.pylintEnabled": false,
                 "python.formatting.provider": "none",
@@ -29,10 +26,19 @@
                 "editor.codeActionsOnSave": {
                     "source.fixAll.ruff": "explicit",
                     "source.organizeImports.ruff": "explicit"
+                },
+                "[python]": {
+                    "editor.defaultFormatter": "charliermarsh.ruff"
                 }
             }
         }
     },
-    "postCreateCommand": "uv venv .venv --python /usr/bin/python3.11 && . .venv/bin/activate && uv pip install -e '.[dev]' && pre-commit install",
-    "remoteUser": "vscode"
+    "hostRequirements": {
+        "gpu": true
+    },
+    "runArgs": [
+        "--gpus", "all"
+    ],
+    "remoteUser": "ubuntu",
+    "postCreateCommand": "echo 'Container is ready!'"
 }
