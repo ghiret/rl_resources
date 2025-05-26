@@ -121,7 +121,7 @@ ignore = [
     "ANN001", # Missing type annotations for function arguments
     "ANN201", "ANN202", "ANN204", "D102","ERA001", "D101",
     "COM812", "ISC001","E501","F405","N802","N806","T201","G004","C901","PLR0913",
-    "PLR0912","PLR0915","PLR0911","TRY300","UP038"
+    "PLR0912","PLR0915","PLR0911","TRY300","UP038","S603"
 ]
 
 # Add per-file-ignores to allow imports in __init__.py
