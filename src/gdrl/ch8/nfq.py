@@ -332,7 +332,7 @@ class NFQ:
         data = get_gif_html(
             env_videos=env_videos,
             title=title.format(self.__class__.__name__),
-            subtitle_eps=sorted(checkpoint_paths.keys()),
+            subtitle_eps=checkpoint_paths,
             max_n_videos=max_n_videos,
         )
         del env

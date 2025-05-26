@@ -112,3 +112,4 @@ wheels/
 *.egg
 .vscode/
 downloaded_pdfs
+results/*

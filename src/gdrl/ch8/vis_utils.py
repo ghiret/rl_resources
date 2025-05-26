@@ -52,6 +52,23 @@ def get_videos_html(env_videos, title, max_n_videos=5):
     return strm
 
 
+def extract_episode_id(video_path):
+    """
+    Extract the episode number from a video filename like '.../episode-0.mp4'.
+
+    Args:
+    ----
+        video_path (str or Path): Path to the video file.
+    Returns the episode number as a string (or int if you prefer).
+
+    """
+    stem = Path(video_path).stem  # e.g., 'episode-0'
+    if "-" in stem:
+        # Split on '-' and take the last part
+        return stem.split("-")[-1]
+    return stem  # fallback: return the whole stem if no '-'
+
+
 def get_gif_html(env_videos, title, subtitle_eps=None, max_n_videos=4):
     """
     Generate HTML to display GIFs converted from video files, with optional subtitles and a maximum number of videos.
@@ -109,6 +126,7 @@ def get_gif_html(env_videos, title, subtitle_eps=None, max_n_videos=4):
                     "-",
                 ),
                 stdout=subprocess.PIPE,
+                stderr=subprocess.DEVNULL,
             )
             # Ensure gif_path is a safe string and not user-controlled
             safe_gif_path = Path(gif_path).resolve()
@@ -130,6 +148,7 @@ def get_gif_html(env_videos, title, subtitle_eps=None, max_n_videos=4):
                     str(safe_gif_path),
                 ],
                 stdin=ps.stdout,
+                stderr=subprocess.DEVNULL,
             )
             ps.wait()
 
@@ -137,18 +156,26 @@ def get_gif_html(env_videos, title, subtitle_eps=None, max_n_videos=4):
             gif = gif_file.read()
             encoded = base64.b64encode(gif)
 
-        with Path(meta_path).open() as data_file:
-            meta = json.load(data_file)
+        # Handle missing meta_path gracefully
+        if meta_path is not None and Path(meta_path).exists():
+            with Path(meta_path).open() as data_file:
+                meta = json.load(data_file)
+            episode_id = meta.get("episode_id", Path(video_path).stem)
+        else:
+            episode_id = extract_episode_id(video_path)
 
         html_tag = """
         <h3>{0}<h3/>
         <img src="data:image/gif;base64,{1}" />"""
         prefix = "Trial " if subtitle_eps is None else "Episode "
-        sufix = str(
-            meta["episode_id"]
-            if subtitle_eps is None
-            else subtitle_eps[meta["episode_id"]]
-        )
+        print(f"video_path: {video_path}")
+        print(f"Episode ID: {episode_id}")
+        print(f"Subtitle EPS: {subtitle_eps}")
+        if subtitle_eps is None:
+            sufix = str(episode_id)
+        else:
+            sufix = str(subtitle_eps.get(int(episode_id), episode_id))
+
         strm += html_tag.format(prefix + sufix, encoded.decode("ascii"))
     return strm
 
