@@ -151,3 +151,16 @@ def get_gif_html(env_videos, title, subtitle_eps=None, max_n_videos=4):
         )
         strm += html_tag.format(prefix + sufix, encoded.decode("ascii"))
     return strm
+
+
+def collect_env_videos(env):
+    """
+    Collect video file paths from the RecordVideo wrapper's video folder.
+
+    Returns a list of (video_path, None) tuples for get_gif_html.
+    """
+    video_folder = getattr(env, "video_folder", None)
+    if video_folder is not None:
+        video_paths = sorted(Path(video_folder).glob("*.mp4"))
+        return [(str(path), None) for path in video_paths]
+    return []

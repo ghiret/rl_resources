@@ -53,6 +53,11 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    ffmpeg \
+    imagemagick
+
 # Create a temporary directory for installing project dependencies
 WORKDIR /tmp/project_deps
 

@@ -4,6 +4,13 @@ from .discounted_cartpole import DiscountedCartPole
 from .egreedy_strategy import EGreedyStrategy
 from .fcq import FCQ
 from .greedy_strategy import GreedyStrategy
-from .nfq import NFQ
+from .nfq import BEEP, NFQ
 
-__all__ = ["FCQ", "EGreedyStrategy", "GreedyStrategy", "DiscountedCartPole", "NFQ"]
+__all__ = [
+    "FCQ",
+    "EGreedyStrategy",
+    "GreedyStrategy",
+    "DiscountedCartPole",
+    "NFQ",
+    "BEEP",
+]

@@ -34,15 +34,19 @@ def get_make_env_fn(**kargs: dict[str, Any]):
         outer_wrappers: list[Callable] | None = None,
     ) -> gym.Env:
         env = None
+
         if render_mode:
             try:
-                env = gym.make(env_name, render=render_mode)
+                env = gym.make(env_name, render_mode=render_mode)
+                print(
+                    f"Created environment '{env_name}' with render mode: {render_mode}"
+                )
             except Exception as e:
                 logging.warning(f"Could not create env with render={render_mode}: {e}")
 
         if env is None:
             env = gym.make(env_name)
-
+        print(f"render_mode: {env.render_mode}")
         if seed is not None:
             env.action_space.seed(seed)
         env = env.unwrapped if unwrapped else env
