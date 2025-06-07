@@ -46,7 +46,12 @@ jobs:
     - name: Run tests with pytest
       run: |
         # Use 'uv run' to execute commands within the managed environment
-        uv run python -m pytest tests/
+        uv run python -m pytest --cov=src --cov-report=xml tests/
+
+    - name: Upload coverage reports to Codecov
+      uses: codecov/codecov-action@v5
+      with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   docs:
     # Ensure tests pass before deploying documentation
