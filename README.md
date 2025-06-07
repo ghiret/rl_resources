@@ -1,6 +1,6 @@
 ![Logo](docs/rl_resources_logo.png)
 
-[![codecov](https://codecov.io/gh/ghiret/my_go_player/branch/main/graph/badge.svg?token=GURIMLWFMA)](https://codecov.io/gh/ghiret/my_go_player)
+[![codecov](https://codecov.io/gh/ghiret/rl_resources/graph/badge.svg?token=5LEFWIH4BC)](https://codecov.io/gh/ghiret/rl_resources)
 # Deep Reinforcement Learning Resources
 
 This repository is my knowledge repository as I explore and learn Reinforcement learning.
