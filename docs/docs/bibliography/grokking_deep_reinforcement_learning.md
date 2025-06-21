@@ -14,7 +14,9 @@ The book starts with basic definitions in the same way as Barto & Sutton do, but
 
 ## Key Takeaways & Opinions
 
-[Your thoughts and insights specific to this chapter/section.]
+### Chapter 8: Neural Fitted Q-learning.
+
+
 
 ## Open Questions
 
